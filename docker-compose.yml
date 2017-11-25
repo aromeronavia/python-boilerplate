@@ -1,0 +1,27 @@
+version: '3.2'
+
+services:
+  boilerplate:
+    build:
+      context: .
+      args:
+        VENV_DIR: /venv
+    ports:
+      - '8000:8000'
+    env_file:
+      - envs/env.local
+    environment:
+      PORT: 8000
+    volumes:
+      - '.:/app'
+    links:
+      - database
+    depends_on:
+      - database
+
+  database:
+    image: postgres
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_DB: database
